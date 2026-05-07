@@ -1,0 +1,32 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies and package managers
+node_modules/
+
+# Build and test outputs
+dist/
+dist-data/
+coverage/
+playwright-report/
+test-results/
+tmp/
+*.log
+
+# Go artifacts kept for future Mode B/C generators
+bin/
+*.test
+*.out
+
+# Keep GitHub Pages output committed.
+!docs/
