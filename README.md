@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# Accent Coach
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live site: https://baditaflorin.github.io/accent-coach/
 
-Currently, two official plugins are available:
+Private browser-based accent coach that analyzes speech and drills phoneme-level pronunciation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Accent Coach records a target sentence, extracts vowel formants locally, compares them with native reference targets, and suggests specific drills. Audio is not uploaded and no account is required.
 
-## React Compiler
+## Quickstart
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+make install-hooks
+make dev
+make test
+make build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## What Works in v0.1.0
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- EN/ES/IT practice sentence selection.
+- Browser microphone recording with local playback.
+- Worker-backed LPC formant extraction.
+- F1/F2 chart with native target markers.
+- Phoneme-level scoring and drill cues.
+- Recent local sessions stored in IndexedDB.
+- GitHub Pages build in `docs/`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Architecture
+
+```mermaid
+flowchart LR
+  U["Learner"] --> P["GitHub Pages static app"]
+  P --> R["MediaRecorder + Web Audio"]
+  P --> W["Web Worker LPC analysis"]
+  W --> S["Phoneme scoring"]
+  S --> UI["Feedback and formant chart"]
+  S --> DB["IndexedDB session history"]
 ```
+
+Docs:
+
+- https://baditaflorin.github.io/accent-coach/
+- docs/architecture.md
+- docs/deploy.md
+- docs/privacy.md
+- docs/adr/
+
+## Commands
+
+```bash
+make help
+make dev
+make lint
+make test
+make build
+make smoke
+make pages-preview
+```
+
+## Local Hooks
+
+```bash
+make install-hooks
+```
+
+Hooks run formatting checks, lint, typecheck, gitleaks, tests, build, and smoke tests locally. This repo intentionally does not use GitHub Actions.

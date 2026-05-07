@@ -1,7 +1,7 @@
-import { PracticeApp } from './features/practice/PracticeApp'
+import { PracticeApp } from "./features/practice/PracticeApp";
 
 function App() {
-  return <PracticeApp />
+  return <PracticeApp />;
 }
 
-export default App
+export default App;

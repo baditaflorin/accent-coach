@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -eu
+
+pattern='^(feat|fix|docs|chore|refactor|test|ops|data)(\([a-z0-9._-]+\))?: .+'
+if ! grep -Eq "$pattern" "$1"; then
+  printf "Commit message must use Conventional Commits.\n" >&2
+  exit 1
+fi
