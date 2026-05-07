@@ -1,0 +1,16 @@
+{
+  "name": "Accent Coach",
+  "short_name": "Accent Coach",
+  "description": "Private browser-based accent coach that analyzes speech and drills phoneme-level pronunciation.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f1e8",
+  "theme_color": "#102820",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
