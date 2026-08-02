@@ -27,8 +27,13 @@ export function analyzeFormants(
   samples: Float32Array,
   sampleRate: number,
 ): FormantFrame[] {
+  if (!Number.isFinite(sampleRate) || sampleRate <= 0) return [];
+
   const frameSize = Math.max(512, Math.round(sampleRate * 0.032));
-  const hopSize = Math.round(sampleRate * 0.016);
+  // Clamp to at least 1 sample of hop: for very low sample rates
+  // Math.round(sampleRate * 0.016) can round down to 0, which would make
+  // `offset` never advance and turn the loop below into an infinite loop.
+  const hopSize = Math.max(1, Math.round(sampleRate * 0.016));
   const frames: FormantFrame[] = [];
 
   for (
